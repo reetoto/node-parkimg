@@ -87,7 +87,7 @@ cars.createCarIn = async (req, res) => {
   const plate1 = req.body.plate1 ? req.body.plate1 : ''
   const plate2 = req.body.plate2 ? req.body.plate2 : ''
   const plate_province_name = req.body.plate_province_name ? req.body.plate_province_name : ''
-  const car_size = req.body.car_size && req.body.car_size!='' ? req.body.car_size.toUpperCase() : ''
+  const car_size = req.body.car_size && req.body.car_size!='' ? req.body.car_size.toUpperCase() : 'S'
   const t = await db.Sequelize.transaction();
 
   var park_id = ''

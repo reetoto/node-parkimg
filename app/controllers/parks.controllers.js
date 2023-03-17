@@ -80,50 +80,25 @@ parks.getParkBySize = async (req, res) => {
 
 parks.createPark = async (req, res) => {
   const slot_no = req.body.slot_no ? req.body.slot_no : ''
-  const allow_s = req.body.allow_s && req.body.allow_s!='' ? req.body.allow_s.toUpperCase() : ''
-  const allow_m = req.body.allow_m && req.body.allow_m!='' ? req.body.allow_m.toUpperCase() : ''
-  const allow_l = req.body.allow_l && req.body.allow_l!='' ? req.body.allow_l.toUpperCase() : ''
-  const piority_group = req.body.piority_group ? req.body.piority_group : ''
+  const piority_group = req.body.piority_group && req.body.piority_group!="" ? req.body.piority_group : 1
   const t = await db.Sequelize.transaction();
 
-  var slot_size = 1
-  if(allow_s=='Y'){
-    slot_size = 1
-  }
-  if(allow_m=='Y'){
-    slot_size = 2
-  }
-  if(allow_l=='Y'){
-    slot_size = 3
-  }
   try {
     await db.Sequelize.query(
       `INSERT INTO parks (
           slot_no,
-          slot_size,
           piority_group,
-          allow_s,
-          allow_m,
-          allow_l,
           created_datetime
         )VALUES(
           :slot_no,
-          :slot_size,
           :piority_group,
-          :allow_s,
-          :allow_m,
-          :allow_l,
           NOW()
         )
       `,
       {
         replacements: {
           slot_no: slot_no,
-          slot_size: slot_size,
-          piority_group: piority_group,
-          allow_s: allow_s,
-          allow_m: allow_m,
-          allow_l: allow_l
+          piority_group: piority_group
         },
         type: QueryTypes.INSERT,
         transaction: t
@@ -143,10 +118,7 @@ parks.updatePark = async (req, res) => {
   const id = req.body.id ? req.body.id : ''
   const is_active = req.body.is_active && req.body.is_active!='' ? req.body.is_active : 'Y'
   const slot_no = req.body.slot_no ? req.body.slot_no : ''
-  const allow_s = req.body.allow_s && req.body.allow_s!='' ? req.body.allow_s.toUpperCase() : 'Y'
-  const allow_m = req.body.allow_m && req.body.allow_m!='' ? req.body.allow_m.toUpperCase() : 'Y'
-  const allow_l = req.body.allow_l && req.body.allow_l!='' ? req.body.allow_l.toUpperCase() : 'Y'
-  const piority_group = req.body.piority_group ? req.body.piority_group : ''
+  const piority_group = req.body.piority_group && req.body.piority_group!="" ? req.body.piority_group : 1
 
   if(id<1 || id=='' || slot_no==''){
     res.status(200).json({
@@ -157,24 +129,10 @@ parks.updatePark = async (req, res) => {
 
   const t = await db.Sequelize.transaction();
 
-  var slot_size = 1
-  if(allow_s=='Y'){
-    slot_size = 1
-  }
-  if(allow_m=='Y'){
-    slot_size = 2
-  }
-  if(allow_l=='Y'){
-    slot_size = 3
-  }
   await db.Sequelize.query(
     `UPDATE parks 
     SET slot_no = :slot_no,
-        slot_size = :slot_size,
         piority_group = :piority_group,
-        allow_s = :allow_s,
-        allow_m = :allow_m,
-        allow_l = :allow_l,
         is_active = :is_active,
         updated_datetime = NOW()
     WHERE id=:id
@@ -184,11 +142,7 @@ parks.updatePark = async (req, res) => {
         id: id,
         is_active: is_active,
         slot_no: slot_no,
-        slot_size: slot_size,
-        piority_group: piority_group,
-        allow_s: allow_s,
-        allow_m: allow_m,
-        allow_l: allow_l
+        piority_group: piority_group
       },
       type: QueryTypes.INSERT,
       transaction: t
