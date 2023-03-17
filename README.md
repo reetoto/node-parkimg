@@ -47,31 +47,34 @@ CREATE TABLE `parks` (
 ```
 
 ### API Documentation
+
 #### Create Parking Lot
 Endpoint: 'POST /park/create'
 Request Body *(parse application/x-www-form-urlencoded)*:
-{
+`{
   "slot_no": "C1", // required
   "priority_group": "2"
-}
+}`
 - priority_group (Entrance proximity level 1 = closest, 2 = middle, 3 = farthest)
 
 #### Update Parking Lot
 Endpoint: 'POST /park/update'
 Request Body *(parse application/x-www-form-urlencoded)*:
-{
+`{
  "id": "1",
  "is_active": "Y",
  "slot_no": "C1",  // required
   "piority_group": "2"
-}
+}`
 
 #### Get Park List
 Endpoint: 'GET /park/all'
 Query Parameters: -
+
 #### Get Park By ID
 Endpoint: 'GET /park/detail'
 Query Parameters: id (requied)
+
 #### Get allocated slot number list by car size
 Endpoint: 'GET /park/detail_park_bysize'
 Query Parameters: car_size (requied), date_in (optional)
@@ -79,25 +82,29 @@ Query Parameters: car_size (requied), date_in (optional)
 #### Create park the car
 Endpoint: 'POST /car/car_in'
 Request Body *(parse application/x-www-form-urlencoded)*:
-{
+`{
  "plate1": "1กก",
  "plate2": "1234",
  "plate_province_name": "กรุงเทพมหานคร",
  "car_size": "M"
-}
+}`
+
 #### Update Leave Slot
 Endpoint: 'POST /car/car_out'
 Request Body *(parse application/x-www-form-urlencoded)*:
-{
+`{
  "car_id": 1,  // required
  "park_id": 1 // required
 }
+`
 #### Get Car List
 Endpoint: 'GET /car/all'
 Query Parameters: -
+
 #### Get Car By ID
 Endpoint: 'GET /car/detail'
 Query Parameters: id (requied)
+
 #### Get Car plate number list by car size
 Endpoint: 'GET /car/detail_car_bysize'
 Query Parameters: car_size (requied), date_in (optional)
